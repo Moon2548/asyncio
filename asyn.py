@@ -14,3 +14,10 @@ URLS = [
 async def fetch(session, url):
     async with session.get(url) as response:
         return await response.json()
+
+
+async def fetch_all():
+    async with aiohttp.ClientSession() as session:
+        tasks = [fetch(session, url) for url in URLS]
+        results = await asyncio.gather(*tasks)
+        return results
