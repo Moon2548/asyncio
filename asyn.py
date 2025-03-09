@@ -21,3 +21,19 @@ async def fetch_all():
         tasks = [fetch(session, url) for url in URLS]
         results = await asyncio.gather(*tasks)
         return results
+
+
+def main():
+    start_time = time.time()
+    results = asyncio.run(fetch_all())
+
+    with open("results.json", "w", encoding="utf-8") as f:
+        import json
+
+        json.dump(results, f, indent=4)
+
+    print(f"Completed in {time.time() - start_time:.2f} seconds")
+
+
+if __name__ == "__main__":
+    main()
